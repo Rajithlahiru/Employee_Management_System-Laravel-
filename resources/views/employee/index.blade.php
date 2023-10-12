@@ -5,7 +5,7 @@
     <div class="bg-light text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">Employee Details</h6>
-            <a href="" class="btn btn-outline-success"> <i class="fas fa-plus"></i>Add New</a>
+            <a href="{{url('employee/create')}}" class="btn btn-outline-success"> <i class="fas fa-plus"></i>Add New</a>
         </div>
         <div class="table-responsive">
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -29,8 +29,8 @@
                         <td>{{ $d->position }}</td>
                         <td>{{ $d->joined }}</td>
                         <td>
-                            <a class="btn btn-sm btn-success" href="">Edit</a>
-                            <a class="btn btn-sm btn-danger" href="">Delete</a>
+                            <a class="btn btn-sm btn-success" href="{{url('employee/'.$d->id.'/edit')}}">Edit</a>
+                            <a onclick="return confirm('Are you sure to delete this data?')"class="btn btn-sm btn-danger" href="{{url('employee/'.$d->id.'/delete')}}">Delete</a>
                         </td>
                     </tr>
                     @endforeach

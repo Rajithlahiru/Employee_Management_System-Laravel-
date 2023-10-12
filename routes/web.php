@@ -28,3 +28,4 @@ Route::get('admin/logout',[AdminController::class,'logout']);
 //Employee Resource
 
 Route::resource('employee',EmployeeController::class);
+Route::get('employee/{id}/delete',[EmployeeController::class,'destroy']);

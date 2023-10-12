@@ -69,7 +69,8 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        return view('employee.edit');
+        $data=Employee::find($id);
+        return view('employee.edit',['data'=>$data]);
     }
 
     /**
@@ -77,7 +78,27 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'mobile' => 'required',
+            'email' => 'required|email', 
+            'position' => 'required',
+            'joined' => 'required|date', 
+        ]);
+
+        $data = Employee::find($id);
+        $data->firstname = $request->firstname;
+        $data->lastname = $request->lastname;
+        $data->address = $request->address;
+        $data->mobile = $request->mobile;
+        $data->email = $request->email;
+        $data->position = $request->position;
+        $data->joined = $request->joined;
+        $data->save();
+
+        return redirect('employee/'.$id.'/edit')->with('msg', 'Data has been updated');
     }
 
     /**
@@ -85,6 +106,7 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        
+        Employee::where('id',$id)->delete();
+        return redirect('employee')->with('msg', 'Data has been deleted');
     }
 }
