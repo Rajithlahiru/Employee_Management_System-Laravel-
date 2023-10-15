@@ -15,6 +15,7 @@
         <p class="text-success">{{session('msg')}}</p>
         @endif
             <form method="POST" action="{{ url('position/'.$data->id) }}" enctype="multipart/form-data">
+                @method('put')
                 @csrf <!-- Add the CSRF token for Laravel -->
     
                 <div class="form-floating mb-3">
