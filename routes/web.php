@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PositionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,8 @@ Route::get('admin/logout',[AdminController::class,'logout']);
 
 Route::resource('employee',EmployeeController::class);
 Route::get('employee/{id}/delete',[EmployeeController::class,'destroy']);
+
+//Position Resource
+
+Route::resource('position',PositionController::class);
+Route::get('position/{id}/delete',[PositionController::class,'destroy']);

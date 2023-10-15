@@ -11,7 +11,7 @@ class EmployeeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {   
         $data=Employee::orderBy('id','desc')->get();
         return view('employee.index',['data'=>$data]);
     }
