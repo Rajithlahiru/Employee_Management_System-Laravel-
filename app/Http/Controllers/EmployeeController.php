@@ -3,79 +3,60 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Employee;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {   
-        $data=Employee::orderBy('id','desc')->get();
-        return view('employee.index',['data'=>$data]);
+        $data = DB::select('SELECT * FROM employees ORDER BY id DESC');
+        return view('employee.index', ['data' => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('employee.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
-{
-    $request->validate([
-        'firstname' => 'required',
-        'lastname' => 'required',
-        'address' => 'required',
-        'mobile' => 'required',
-        'email' => 'required|email', 
-        'position' => 'required',
-        'joined' => 'required|date', 
-    ]);
+    {
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'mobile' => 'required',
+            'email' => 'required|email', 
+            'position' => 'required',
+            'joined' => 'required|date', 
+        ]);
 
-    
-    $data = new Employee();
-    $data->firstname = $request->firstname;
-    $data->lastname = $request->lastname;
-    $data->address = $request->address;
-    $data->mobile = $request->mobile;
-    $data->email = $request->email;
-    $data->position = $request->position;
-    $data->joined = $request->joined;
-    
-    $data->save();
+        DB::insert('INSERT INTO employees (firstname, lastname, address, mobile, email, position, joined) VALUES (?, ?, ?, ?, ?, ?, ?)', [
+            $request->firstname,
+            $request->lastname,
+            $request->address,
+            $request->mobile,
+            $request->email,
+            $request->position,
+            $request->joined,
+        ]);
 
-    return redirect('employee/create')->with('msg', 'Data has been submitted');
-}
+        DB::statement('INSERT INTO employee_logs (employee_id, action, created_at, updated_at) VALUES (LAST_INSERT_ID(), "create", NOW(), NOW())');
 
+        return redirect('employee/create')->with('msg', 'Data has been submitted');
+    }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        $data=Employee::find($id);
-        return view('employee.show',['data'=>$data]);
+        $data = DB::select('SELECT * FROM employees WHERE id = ?', [$id]);
+        return view('employee.show', ['data' => $data[0]]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $data=Employee::find($id);
-        return view('employee.edit',['data'=>$data]);
+        $data = DB::select('SELECT * FROM employees WHERE id = ?', [$id]);
+        return view('employee.edit', ['data' => $data[0]]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -88,25 +69,23 @@ class EmployeeController extends Controller
             'joined' => 'required|date', 
         ]);
 
-        $data = Employee::find($id);
-        $data->firstname = $request->firstname;
-        $data->lastname = $request->lastname;
-        $data->address = $request->address;
-        $data->mobile = $request->mobile;
-        $data->email = $request->email;
-        $data->position = $request->position;
-        $data->joined = $request->joined;
-        $data->save();
+        DB::update('UPDATE employees SET firstname = ?, lastname = ?, address = ?, mobile = ?, email = ?, position = ?, joined = ? WHERE id = ?', [
+            $request->firstname,
+            $request->lastname,
+            $request->address,
+            $request->mobile,
+            $request->email,
+            $request->position,
+            $request->joined,
+            $id,
+        ]);
 
-        return redirect('employee/'.$id.'/edit')->with('msg', 'Data has been updated');
+        return redirect('employee/' . $id . '/edit')->with('msg', 'Data has been updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        Employee::where('id',$id)->delete();
+        DB::delete('DELETE FROM employees WHERE id = ?', [$id]);
         return redirect('employee')->with('msg', 'Data has been deleted');
     }
 }

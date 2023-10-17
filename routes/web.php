@@ -35,3 +35,5 @@ Route::get('employee/{id}/delete',[EmployeeController::class,'destroy']);
 
 Route::resource('position',PositionController::class);
 Route::get('position/{id}/delete',[PositionController::class,'destroy']);
+
+Route::get('/insert-data', [PositionController::class, 'insertData']);

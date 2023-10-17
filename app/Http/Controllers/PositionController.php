@@ -2,96 +2,88 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class PositionController extends Controller
+class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
-    {
-        $data=Position::orderBy('id','desc')->get();
-        return view('position.index',['data'=>$data]);
+    {   
+        $data = DB::select('CALL GetEmployees()');
+        return view('employee.index', ['data' => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('position.create');
+        return view('employee.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'position_name' => 'required',
-            'basic_salary' => 'required',
-            'overtime_salary_per_hour' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'mobile' => 'required',
+            'email' => 'required|email', 
+            'position' => 'required',
+            'joined' => 'required|date', 
         ]);
 
-        
-        $data = new Position();
-        $data->position_name = $request->position_name;
-        $data->basic_salary = $request->basic_salary;
-        $data->overtime_salary_per_hour = $request->overtime_salary_per_hour;
-        
-        $data->save();
+        DB::statement('CALL InsertEmployee(?, ?, ?, ?, ?, ?, ?)', [
+            $request->firstname,
+            $request->lastname,
+            $request->address,
+            $request->mobile,
+            $request->email,
+            $request->position,
+            $request->joined,
+        ]);
 
-        return redirect('position/create')->with('msg', 'Data has been submitted');
+        return redirect('employee/create')->with('msg', 'Data has been submitted');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        $data=Position::find($id);
-        return view('position.show',['data'=>$data]);
+        $data = DB::select('CALL GetEmployeeById(?)', [$id]);
+        return view('employee.show', ['data' => $data[0]]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $data=Position::find($id);
-        return view('position.edit',['data'=>$data]);
+        $data = DB::select('CALL GetEmployeeById(?)', [$id]);
+        return view('employee.edit', ['data' => $data[0]]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'position_name' => 'required',
-            'basic_salary' => 'required',
-            'overtime_salary_per_hour' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'mobile' => 'required',
+            'email' => 'required|email', 
+            'position' => 'required',
+            'joined' => 'required|date', 
         ]);
 
-        
-        $data = Position::find($id);
-        $data->position_name = $request->position_name;
-        $data->basic_salary = $request->basic_salary;
-        $data->overtime_salary_per_hour = $request->overtime_salary_per_hour;
-        
-        $data->save();
+        DB::statement('CALL UpdateEmployee(?, ?, ?, ?, ?, ?, ?, ?)', [
+            $id,
+            $request->firstname,
+            $request->lastname,
+            $request->address,
+            $request->mobile,
+            $request->email,
+            $request->position,
+            $request->joined,
+        ]);
 
-        return redirect('position/'.$id.'/edit')->with('msg', 'Data has been updated');
+        return redirect('employee/' . $id . '/edit')->with('msg', 'Data has been updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        Position::where('id',$id)->delete();
-        return redirect('position')->with('msg', 'Data has been deleted');
+        DB::statement('CALL DeleteEmployee(?)', [$id]);
+        return redirect('employee')->with('msg', 'Data has been deleted');
     }
 }

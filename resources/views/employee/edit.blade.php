@@ -49,7 +49,7 @@
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="date" value="{{$data->date}}" class="form-control" id="joined" name="joined">
+                    <input type="date" value="{{$data->joined}}" class="form-control" id="joined" name="joined">
                     <label for="joined">Joined Date</label>
                 </div>
     
