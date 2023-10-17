@@ -5,85 +5,69 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeController extends Controller
+class PositionController extends Controller
 {
     public function index()
-    {   
-        $data = DB::select('CALL GetEmployees()');
-        return view('employee.index', ['data' => $data]);
+    {
+        $data = DB::select('CALL GetPositions()');
+        return view('position.index', ['data' => $data]);
     }
 
     public function create()
     {
-        return view('employee.create');
+        return view('position.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'address' => 'required',
-            'mobile' => 'required',
-            'email' => 'required|email', 
-            'position' => 'required',
-            'joined' => 'required|date', 
+            'position_name' => 'required',
+            'basic_salary' => 'required',
+            'overtime_salary_per_hour' => 'required',
         ]);
 
-        DB::statement('CALL InsertEmployee(?, ?, ?, ?, ?, ?, ?)', [
-            $request->firstname,
-            $request->lastname,
-            $request->address,
-            $request->mobile,
-            $request->email,
-            $request->position,
-            $request->joined,
+        DB::statement('CALL InsertPosition(?, ?, ?)', [
+            $request->position_name,
+            $request->basic_salary,
+            $request->overtime_salary_per_hour,
         ]);
 
-        return redirect('employee/create')->with('msg', 'Data has been submitted');
+        return redirect('position/create')->with('msg', 'Data has been submitted');
     }
 
     public function show(string $id)
     {
-        $data = DB::select('CALL GetEmployeeById(?)', [$id]);
-        return view('employee.show', ['data' => $data[0]]);
+        $data = DB::select('CALL GetPositionById(?)', [$id]);
+        return view('position.show', ['data' => $data[0]]);
     }
 
     public function edit(string $id)
     {
-        $data = DB::select('CALL GetEmployeeById(?)', [$id]);
-        return view('employee.edit', ['data' => $data[0]]);
+        $data = DB::select('CALL GetPositionById(?)', [$id]);
+        return view('position.edit', ['data' => $data[0]]);
     }
 
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'address' => 'required',
-            'mobile' => 'required',
-            'email' => 'required|email', 
-            'position' => 'required',
-            'joined' => 'required|date', 
+            'position_name' => 'required',
+            'basic_salary' => 'required',
+            'overtime_salary_per_hour' => 'required',
         ]);
 
-        DB::statement('CALL UpdateEmployee(?, ?, ?, ?, ?, ?, ?, ?)', [
+        DB::statement('CALL UpdatePosition(?, ?, ?, ?)', [
             $id,
-            $request->firstname,
-            $request->lastname,
-            $request->address,
-            $request->mobile,
-            $request->email,
-            $request->position,
-            $request->joined,
+            $request->position_name,
+            $request->basic_salary,
+            $request->overtime_salary_per_hour,
         ]);
 
-        return redirect('employee/' . $id . '/edit')->with('msg', 'Data has been updated');
+        return redirect('position/' . $id . '/edit')->with('msg', 'Data has been updated');
     }
 
     public function destroy(string $id)
     {
-        DB::statement('CALL DeleteEmployee(?)', [$id]);
-        return redirect('employee')->with('msg', 'Data has been deleted');
+        DB::statement('CALL DeletePosition(?)', [$id]);
+        return redirect('position')->with('msg', 'Data has been deleted');
     }
 }

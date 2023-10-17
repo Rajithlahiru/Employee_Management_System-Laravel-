@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeController extends Controller
+Class EmployeeController extends Controller
 {
     public function index()
     {   
-        $data = DB::select('SELECT * FROM employees ORDER BY id DESC');
+        $data = DB::select('CALL GetEmployees()');
         return view('employee.index', ['data' => $data]);
     }
 
@@ -30,7 +30,7 @@ class EmployeeController extends Controller
             'joined' => 'required|date', 
         ]);
 
-        DB::insert('INSERT INTO employees (firstname, lastname, address, mobile, email, position, joined) VALUES (?, ?, ?, ?, ?, ?, ?)', [
+        DB::statement('CALL InsertEmployee(?, ?, ?, ?, ?, ?, ?)', [
             $request->firstname,
             $request->lastname,
             $request->address,
@@ -40,20 +40,18 @@ class EmployeeController extends Controller
             $request->joined,
         ]);
 
-        DB::statement('INSERT INTO employee_logs (employee_id, action, created_at, updated_at) VALUES (LAST_INSERT_ID(), "create", NOW(), NOW())');
-
         return redirect('employee/create')->with('msg', 'Data has been submitted');
     }
 
     public function show(string $id)
     {
-        $data = DB::select('SELECT * FROM employees WHERE id = ?', [$id]);
+        $data = DB::select('CALL GetEmployeeById(?)', [$id]);
         return view('employee.show', ['data' => $data[0]]);
     }
 
     public function edit(string $id)
     {
-        $data = DB::select('SELECT * FROM employees WHERE id = ?', [$id]);
+        $data = DB::select('CALL GetEmployeeById(?)', [$id]);
         return view('employee.edit', ['data' => $data[0]]);
     }
 
@@ -69,7 +67,8 @@ class EmployeeController extends Controller
             'joined' => 'required|date', 
         ]);
 
-        DB::update('UPDATE employees SET firstname = ?, lastname = ?, address = ?, mobile = ?, email = ?, position = ?, joined = ? WHERE id = ?', [
+        DB::statement('CALL UpdateEmployee(?, ?, ?, ?, ?, ?, ?, ?)', [
+            $id,
             $request->firstname,
             $request->lastname,
             $request->address,
@@ -77,7 +76,6 @@ class EmployeeController extends Controller
             $request->email,
             $request->position,
             $request->joined,
-            $id,
         ]);
 
         return redirect('employee/' . $id . '/edit')->with('msg', 'Data has been updated');
@@ -85,7 +83,7 @@ class EmployeeController extends Controller
 
     public function destroy(string $id)
     {
-        DB::delete('DELETE FROM employees WHERE id = ?', [$id]);
+        DB::statement('CALL DeleteEmployee(?)', [$id]);
         return redirect('employee')->with('msg', 'Data has been deleted');
     }
 }

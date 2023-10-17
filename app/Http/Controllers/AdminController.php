@@ -4,12 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
     //dashboard
     public function index(){
-        return view('index');
+        
+        $employeeCountResult = DB::select("SELECT COUNT(*) AS employee_count FROM employees");
+        $employeeCount = $employeeCountResult[0]->employee_count;
+
+        $positionCountResult = DB::select("SELECT COUNT(*) AS position_count FROM positions");
+        $positionCount = $positionCountResult[0]->position_count;
+        
+        return view('index',[
+            'employeeCount' => $employeeCount,
+            'positionCount' => $positionCount
+        ]);
     }
 
     public function login(){
