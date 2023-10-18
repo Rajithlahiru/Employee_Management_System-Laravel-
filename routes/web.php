@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +38,8 @@ Route::resource('position',PositionController::class);
 Route::get('position/{id}/delete',[PositionController::class,'destroy']);
 
 Route::get('/insert-data', [PositionController::class, 'insertData']);
+
+// attendance Resource
+
+Route::resource('attendance',AttendanceController::class);
+
