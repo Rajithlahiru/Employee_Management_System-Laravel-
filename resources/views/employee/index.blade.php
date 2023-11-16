@@ -26,11 +26,11 @@
                         <td>{{ $d->firstname }}</td>
                         <td>{{ $d->mobile }}</td>
                         <td>{{ $d->email }}</td>
-                        <td>{{ $d->position }}</td>
-                        <td>{{ $d->joined }}</td>
+                        <td>{{ $d->position_id }}</td>
+                        <td>{{ $d->joined_date }}</td>
                         <td>
-                            <a class="btn btn-sm btn-success" href="{{url('employee/'.$d->id.'/edit')}}">Edit</a>
-                            <a onclick="return confirm('Are you sure to delete this data?')"class="btn btn-sm btn-danger" href="{{url('employee/'.$d->id.'/delete')}}">Delete</a>
+                            <a class="btn btn-sm btn-success" href="{{url('employee/'.$d->employee_id.'/edit')}}">Edit</a>
+                            <a onclick="return confirm('Are you sure to delete this data?')"class="btn btn-sm btn-danger" href="{{url('employee/'.$d->employee_id.'/delete')}}">Delete</a>
                         </td>
                     </tr>
                     @endforeach

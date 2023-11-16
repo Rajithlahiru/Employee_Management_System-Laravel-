@@ -43,12 +43,12 @@
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="position" name="position" placeholder="Position">
+                    <input type="text" class="form-control" id="position" name="position_id" placeholder="Position">
                     <label for="position">Position</label>
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="joined" name="joined">
+                    <input type="date" class="form-control" id="joined" name="joined_date">
                     <label for="joined">Joined Date</label>
                 </div>
     
