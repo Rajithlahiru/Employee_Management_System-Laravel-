@@ -14,42 +14,42 @@
         @if(Session::has('msg'))
         <p class="text-success">{{session('msg')}}</p>
         @endif
-            <form method="POST" action="{{url('employee/'.$data->id)}}" enctype="multipart/form-data">
+            <form method="POST" action="{{url('employee/'.$data->employee_id)}}" enctype="multipart/form-data">
                 @method('put')
                 @csrf <!-- Add the CSRF token for Laravel -->
     
                 <div class="form-floating mb-3">
-                    <input type="text" value="{{$data->firstname}}" class="form-control" id="firstname" name="firstname" placeholder="First Name">
+                    <input type="text" value="{{$data->FirstName}}" class="form-control" id="firstname" name="firstname" placeholder="First Name">
                     <label for="firstname">First Name</label>
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="text" value="{{$data->lastname}}" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
+                    <input type="text" value="{{$data->LastName}}" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
                     <label for="lastname">Last Name</label>
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="text" value="{{$data->address}}" class="form-control" id="address" name="address" placeholder="Address">
+                    <input type="text" value="{{$data->Address}}" class="form-control" id="address" name="address" placeholder="Address">
                     <label for="address">Address</label>
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="text" value="{{$data->mobile}}" class="form-control" id="mobile" name="mobile" placeholder="Mobile">
+                    <input type="text" value="{{$data->Mobile}}" class="form-control" id="mobile" name="mobile" placeholder="Mobile">
                     <label for="mobile">Mobile</label>
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="email" value="{{$data->email}}" class="form-control" id="email" name="email" placeholder="name@example.com">
+                    <input type="email" value="{{$data->Email}}" class="form-control" id="email" name="email" placeholder="name@example.com">
                     <label for="email">Email address</label>
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="text" value="{{$data->position}}" class="form-control" id="position" name="position" placeholder="Position">
+                    <input type="text" value="{{$data->PositionID}}" class="form-control" id="position" name="position_id" placeholder="Position">
                     <label for="position">Position</label>
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="date" value="{{$data->joined}}" class="form-control" id="joined" name="joined">
+                    <input type="date" value="{{$data->JoinedDate}}" class="form-control" id="joined" name="joined_date">
                     <label for="joined">Joined Date</label>
                 </div>
     

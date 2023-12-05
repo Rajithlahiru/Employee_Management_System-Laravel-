@@ -11,6 +11,7 @@
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
                     <tr class="text-dark">
+                        <th scope="col">ID</th>
                         <th scope="col">Position</th>
                         <th scope="col">Basic_Salary</th>
                         <th scope="col">OT_salary_ph</th>
@@ -20,9 +21,10 @@
                     @if($data)
 	                @foreach($data as $d)
                     <tr>
-                        <td>{{ $d->position_name }}</td>
-                        <td>{{ $d->basic_salary }}</td>
-                        <td>{{ $d->overtime_salary_per_hour}}</td>
+                        <td>{{ $d->id }}</td>
+                        <td>{{ $d->PositionName }}</td>
+                        <td>{{ $d->BasicSalary }}</td>
+                        <td>{{ $d->OvertimeSalaryPerHour}}</td>
                         <td>
                             <a class="btn btn-sm btn-success" href="{{url('position/'.$d->id.'/edit')}}">Edit</a>
                             <a onclick="return confirm('Are you sure to delete this data?')"class="btn btn-sm btn-danger" href="{{url('position/'.$d->id.'/delete')}}">Delete</a>

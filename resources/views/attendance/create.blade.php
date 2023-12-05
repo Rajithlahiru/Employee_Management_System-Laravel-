@@ -21,6 +21,14 @@
                     <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="employee_id">
                     <label for="employee_id">Employee ID</label>
                 </div>
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="attendance_date" name="attendance_date" placeholder="attendance_date">
+                    <label for="attendance_date">Attendance Date</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="working_hours" name="working_hours" placeholder="working_hours">
+                    <label for="working_hours">Working Hours</label>
+                </div>
                     <div class="row">
                     <div class="col-md-8">
                         <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i> Submit</button>

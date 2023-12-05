@@ -11,10 +11,10 @@ class AdminController extends Controller
     //dashboard
     public function index(){
         
-        $employeeCountResult = DB::select("SELECT COUNT(*) AS employee_count FROM employee_table");
+        $employeeCountResult = DB::select("SELECT COUNT(*) AS employee_count FROM employees");
         $employeeCount = $employeeCountResult[0]->employee_count;
 
-        $positionCountResult = DB::select("SELECT COUNT(*) AS position_count FROM position_table");
+        $positionCountResult = DB::select("SELECT COUNT(*) AS position_count FROM positions");
         $positionCount = $positionCountResult[0]->position_count;
         
         return view('index',[

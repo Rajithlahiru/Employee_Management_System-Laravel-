@@ -9,7 +9,7 @@ class PositionController extends Controller
 {
     public function index()
     {
-        $data = DB::select('CALL GetPositions()');
+        $data = DB::select('EXEC GetPositions');
         return view('position.index', ['data' => $data]);
     }
 
@@ -26,7 +26,7 @@ class PositionController extends Controller
             'overtime_salary_per_hour' => 'required',
         ]);
 
-        DB::statement('CALL InsertPosition(?, ?, ?)', [
+        DB::statement('EXEC InsertPosition ?, ?, ?', [
             $request->position_name,
             $request->basic_salary,
             $request->overtime_salary_per_hour,
@@ -37,13 +37,13 @@ class PositionController extends Controller
 
     public function show(string $id)
     {
-        $data = DB::select('CALL GetPositionById(?)', [$id]);
+        $data = DB::select('EXEC GetPositionById ?', [$id]);
         return view('position.show', ['data' => $data[0]]);
     }
 
     public function edit(string $id)
     {
-        $data = DB::select('CALL GetPositionById(?)', [$id]);
+        $data = DB::select('EXEC GetPositionById ?', [$id]);
         return view('position.edit', ['data' => $data[0]]);
     }
 
@@ -55,7 +55,7 @@ class PositionController extends Controller
             'overtime_salary_per_hour' => 'required',
         ]);
 
-        DB::statement('CALL UpdatePosition(?, ?, ?, ?)', [
+        DB::statement('EXEC UpdatePosition ?, ?, ?, ?', [
             $id,
             $request->position_name,
             $request->basic_salary,
@@ -67,7 +67,7 @@ class PositionController extends Controller
 
     public function destroy(string $id)
     {
-        DB::statement('CALL DeletePosition(?)', [$id]);
+        DB::statement('EXEC DeletePosition ?', [$id]);
         return redirect('position')->with('msg', 'Data has been deleted');
     }
 }

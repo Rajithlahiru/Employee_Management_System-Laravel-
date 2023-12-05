@@ -19,17 +19,17 @@
                 @csrf <!-- Add the CSRF token for Laravel -->
     
                 <div class="form-floating mb-3">
-                    <input type="text" value="{{$data->position_name}}" class="form-control" id="position_name" name="position_name" placeholder="Position">
+                    <input type="text" value="{{$data->PositionName}}" class="form-control" id="position_name" name="position_name" placeholder="Position">
                     <label for="position_name">Positon</label>
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="text" value="{{$data->basic_salary}}" class="form-control" id="basic_salary" name="basic_salary" placeholder="Basic Salary">
+                    <input type="text" value="{{$data->BasicSalary}}" class="form-control" id="basic_salary" name="basic_salary" placeholder="Basic Salary">
                     <label for="basic_salary">Basic Salary</label>
                 </div>
     
                 <div class="form-floating mb-3">
-                    <input type="text" value="{{$data->overtime_salary_per_hour}}" class="form-control" id="overtime_salary_per_hour" name="overtime_salary_per_hour" placeholder="overtime_salary_per_hour">
+                    <input type="text" value="{{$data->OvertimeSalaryPerHour}}" class="form-control" id="overtime_salary_per_hour" name="overtime_salary_per_hour" placeholder="overtime_salary_per_hour">
                     <label for="overtime_salary_per_hour">Overtime Salary Per Hour</label>
                 </div>
                     <div class="row">

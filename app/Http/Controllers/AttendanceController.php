@@ -12,7 +12,8 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        return view('attendance.create');
+        $data = DB::select('EXEC GetAttendance');
+        return view('attendance.index', ['data' => $data]);
     }
 
     /**
@@ -20,7 +21,7 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-        return view('attendance.index');
+        return view('attendance.create');
     }
 
     /**
@@ -30,10 +31,14 @@ class AttendanceController extends Controller
     {
         $request->validate([
             'employee_id' => 'required',
+            'attendance_date' => 'required|date',
+            'working_hours' => 'required|numeric', // Adjust as needed
         ]);
 
-        DB::statement('CALL EnterAttendance(?)', [
+        DB::statement('EXEC InsertAttendance ?, ?, ?', [
             $request->employee_id,
+            $request->attendance_date,
+            $request->working_hours,
         ]);
 
         return redirect('attendance/create')->with('msg', 'Data has been submitted');
@@ -60,7 +65,7 @@ class AttendanceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Add code for updating attendance if needed
     }
 
     /**
@@ -68,6 +73,6 @@ class AttendanceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Add code for deleting attendance if needed
     }
 }
