@@ -72,12 +72,7 @@
                             <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
                             <label for="floatingPassword">Password</label>
                         </div>
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                            </div>
-                        </div>
+                    
                         <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
                         </form>
                     </div>

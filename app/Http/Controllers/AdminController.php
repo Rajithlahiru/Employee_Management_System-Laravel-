@@ -16,10 +16,13 @@ class AdminController extends Controller
 
         $positionCountResult = DB::select("SELECT COUNT(*) AS position_count FROM positions");
         $positionCount = $positionCountResult[0]->position_count;
+
+        // $positions = DB::select(DB::raw('SELECT PositionName, BasicSalary FROM positions'));
         
         return view('index',[
             'employeeCount' => $employeeCount,
-            'positionCount' => $positionCount
+            'positionCount' => $positionCount,
+            // 'positions' => $positions,
         ]);
     }
 
@@ -33,18 +36,18 @@ class AdminController extends Controller
             'password' => 'required'
         ]);
     
-        $checkAdmin = Admin::where([
-            'username' => $request->username,
-            'password' => $request->password
-        ])->count();
+        // Hardcoded values for username and password
+        $hardcodedUsername = 'admin';
+        $hardcodedPassword = '12345';
     
-        if ($checkAdmin > 0) {
-            session(['adminLogin',true]);
+        if ($request->username == $hardcodedUsername && $request->password == $hardcodedPassword) {
+            session(['adminLogin' => true]);
             return redirect('admin');
-        }else{
-            return redirect('admin/login')->with('msg','Invalid username/password!!');
+        } else {
+            return redirect('admin/login')->with('msg', 'Invalid username/password!!');
         }
     }
+    
 
     public function logout(){
         session()->forget('adminLogin');

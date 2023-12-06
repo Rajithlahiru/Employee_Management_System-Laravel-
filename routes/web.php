@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\SalaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +43,7 @@ Route::get('/insert-data', [PositionController::class, 'insertData']);
 // attendance Resource
 
 Route::resource('attendance',AttendanceController::class);
+
+// salary Resource
+Route::get('salary',[SalaryController::class,'index']);
 
